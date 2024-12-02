@@ -1,0 +1,50 @@
+class Produto: 
+    def _init_(self,  nome,  preco,  estoque,  categoria): 
+        self.nome = nome
+        self.preco = preco
+        self.estoque = estoque
+        self.categoria = categoria
+
+    def aplicar_desconto(self,  porcentagem): 
+        desconto = self.preco * (porcentagem / 100)
+        self.preco -= desconto
+
+    def _str_(self): 
+        return f"{self.nome} - R${self.preco:.2f} ({self.estoque} em estoque)"
+
+class Promocao: 
+    def _init_(self,  descricao,  produtos,  desconto): 
+        self.descricao = descricao
+        self.produtos = produtos
+        self.desconto = desconto
+
+    def aplicar_promocao(self): 
+        for produto in self.produtos: 
+            produto.aplicar_desconto(self.desconto)
+
+    def _str_(self): 
+        produtos_lista = ", ".join([produto.nome for produto in self.produtos])
+        return f"Promoção: {self.descricao}\nProdutos: {produtos_lista}\nDesconto: {self.desconto}%"
+
+# Cadastro de produtos
+produto1 = Produto("Perfume Elegância",  120.00,  50,  "Perfume")
+produto2 = Produto("Creme Hidratante",  45.00,  30,  "Cuidado com a Pele")
+produto3 = Produto("Body Splash Floral",  60.00,  20,  "Perfume")
+
+# Exibição inicial
+print("Produtos disponível: ")
+for produto in [produto1,  produto2,  produto3]: 
+    print(produto)
+
+# Criando uma promoção
+promocao = Promocao("Black Friday",  [produto1,  produto3],  20)
+print("\nAntes da promoção: ")
+print(promocao)
+
+# Aplicando a promoção
+promocao.aplicar_promocao()
+
+# Exibição após a promoção
+print("\nDepois da promoção: ")
+for produto in [produto1,  produto2,  produto3]: 
+    print(produto)
