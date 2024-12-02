@@ -1,0 +1,61 @@
+class PerfumariaOnline: 
+    def _init_(self): 
+        self.produtos = []
+        self.total = 0
+
+    def adicionar_produto(self,  nome,  preco): 
+        self.produtos.append({"nome":  nome,  "preco":  preco})
+        self.total += preco
+        print(f"Produto '{nome}' adicionado ao carrinho. Preço:  R${preco: .2f}")
+
+    def exibir_carrinho(self): 
+        print("\n--- Carrinho de Compras ---")
+        for produto in self.produtos: 
+            print(f"{produto['nome']} - R${produto['preco']: .2f}")
+        print(f"Total:  R${self.total: .2f}")
+        print("---------------------------\n")
+
+    def escolher_pagamento(self): 
+        print("Escolha o método de pagamento: ")
+        print("1. Cartão de Crédito (sem taxas)")
+        print("2. Pix (10% de desconto)")
+        print("3. Boleto Bancário (5% de desconto)")
+        metodo = input("Digite o número da opção desejada:  ")
+
+        if metodo == "1": 
+            self.pagamento_cartao()
+        elif metodo == "2": 
+            self.pagamento_pix()
+        elif metodo == "3": 
+            self.pagamento_boleto()
+        else: 
+            print("Opção inválida. Tente novamente.")
+            self.escolher_pagamento()
+
+    def pagamento_cartao(self): 
+        print(f"\nPagamento com Cartão de Crédito confirmado.")
+        print(f"Total a pagar:  R${self.total: .2f}")
+        print("Obrigado por sua compra!")
+
+    def pagamento_pix(self): 
+        desconto = self.total * 0.10
+        valor_final = self.total - desconto
+        print(f"\nPagamento com Pix confirmado.")
+        print(f"Desconto aplicado:  R${desconto: .2f}")
+        print(f"Total a pagar:  R${valor_final: .2f}")
+        print("Obrigado por sua compra!")
+
+    def pagamento_boleto(self): 
+        desconto = self.total * 0.05
+        valor_final = self.total - desconto
+        print(f"\nPagamento com Boleto Bancário confirmado.")
+        print(f"Desconto aplicado:  R${desconto: .2f}")
+        print(f"Total a pagar:  R${valor_final: .2f}")
+        print("Obrigado por sua compra!")
+
+# --- Exemplo de uso ---
+loja = PerfumariaOnline()
+loja.adicionar_produto("Perfume Floral",  120.00)
+loja.adicionar_produto("Hidratante Corporal",  80.00)
+loja.exibir_carrinho()
+loja.escolher_pagamento()
